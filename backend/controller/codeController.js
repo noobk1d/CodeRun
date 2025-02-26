@@ -1,6 +1,7 @@
 const express = require("express");
 const AppError = require("../utils/appError");
 const axios = require("axios");
+const he = require("he");
 
 const PISTON_API_URL = "https://emkc.org/api/v2/piston/execute";
 exports.getSupportedLanguages = async (req, res, next) => {
@@ -23,7 +24,9 @@ exports.getSupportedLanguages = async (req, res, next) => {
 
 exports.codeExecute = async (req, res, next) => {
   try {
+    console.log(req.body);
     const { language, version, code } = req.body;
+    const rawCode = he.decode(req.body.code); // Decodes HTML entities
 
     // Validate input
     if (!language || !version || !code) {
@@ -31,13 +34,28 @@ exports.codeExecute = async (req, res, next) => {
         .status(400)
         .json({ error: "Missing required fields: language, version, or code" });
     }
-
-    // Send request to Piston API
-    const response = await axios.post(PISTON_API_URL, {
+    const formattedRequest = {
       language,
       version,
-      files: [{ content: code }],
-    });
+      files: [
+        {
+          name: `main.${
+            language === "cpp"
+              ? "cpp"
+              : language === "java"
+              ? "java"
+              : language === "js"
+              ? "js"
+              : "py"
+          }`,
+          content: rawCode,
+        },
+      ],
+      stdin: "",
+      args: [],
+    };
+    // Send request to Piston API
+    const response = await axios.post(PISTON_API_URL, formattedRequest);
 
     // Respond with execution result
     return res.status(200).json({
@@ -50,6 +68,7 @@ exports.codeExecute = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error executing code:", error.message);
+    // console.log(error);
     return res.status(500).json({
       success: false,
       error: "Code execution failed",

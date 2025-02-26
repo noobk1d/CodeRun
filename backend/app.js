@@ -4,9 +4,13 @@ const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xssclean = require("xss-clean");
+const cors = require("cors");
 const codeRouter = require("./routes/codeRoute");
 
 const app = express();
+
+app.use(cors()); // ✅ Allow all origins (for testing)
+app.use(express.json());
 
 app.use(helmet());
 app.use(express.json({ limit: "10kB" }));
