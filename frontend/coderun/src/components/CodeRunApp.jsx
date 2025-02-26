@@ -183,10 +183,9 @@ print(greet("World"))`,
       version,
       code,
     };
-    console.log(codeBody);
     try {
       const response = await fetch(
-        "http://127.0.0.1:3000/api/code/code-execute",
+        "https://coderun-0he1.onrender.com/api/code/code-execute",
         {
           method: "POST",
           headers: {
@@ -196,7 +195,6 @@ print(greet("World"))`,
         }
       );
       const data = await response.json();
-      console.log(data);
       setOutput(
         data.success ? (data.error ? data.error : data.output) : data.error
       );
