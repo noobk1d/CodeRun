@@ -55,7 +55,7 @@ The backend should now be running on `http://localhost:5000/`
 
 ---
 
-## 📡 API Endpoints
+## 📡 API Endpoints - Integrate into Your Project
 
 ### 🔹 1. Fetch Available Languages
 
