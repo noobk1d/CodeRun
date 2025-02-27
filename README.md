@@ -29,7 +29,7 @@ CodeRun is an online code execution platform that allows users to write and run 
 ### 🔹 Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/coderun.git
+git clone https://github.com/noobk1d/CodeRun.git
 cd coderun
 ```
 
