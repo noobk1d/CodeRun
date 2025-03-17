@@ -5,7 +5,7 @@ CodeRun is an online code execution platform that allows users to write and run 
 ## 🚀 Live Demo
 
 [Click here to try CodeRun](https://code-run-five.vercel.app/)
-
+First run takes a few seconds (6-8) to kick off—just a brief warm-up!
 ---
 
 ## 🛠 Tech Stack
